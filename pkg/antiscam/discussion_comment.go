@@ -9,11 +9,22 @@ import (
 
 func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 	var discussion_comment github.DiscussionComment
+	var discussion github.Discussion
+
+	// github.Event
 	if err := json.Unmarshal(payload, &discussion_comment); err != nil {
 		return err
 	}
 
+	if err := json.Unmarshal(payload, &discussion); err != nil {
+		return err
+	}
+
 	fmt.Printf("raw event payload: %s\n", payload)
+
+	fmt.Printf("discussion comment: %s\n", discussion_comment)
+
+	fmt.Printf("discussion: %s\n", github.Stringify(discussion))
 
 	// discussion_comment.get
 
@@ -27,7 +38,7 @@ func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 	}
 
 	// if len(detections) > 0 {
-	// 	a.client.Teams.DeleteCommentByID(a.ctx, )
+		// a.client.Teams.DeleteCommentByID(a.ctx, )
 
 	// 	a.client.Issues.DeleteComment(
 	// 		a.ctx,
