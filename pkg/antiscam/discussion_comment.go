@@ -12,6 +12,8 @@ func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 	var team_event github.TeamEvent
 	var issue_comment github.IssueCommentEvent
 
+	// github.Event
+
 	fmt.Printf("raw event payload: %s\n", payload)
 
 	if err := json.Unmarshal(payload, &discussion_event); err != nil {
