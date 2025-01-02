@@ -5,6 +5,10 @@ on:
     types:
       - created
       - edited
+  discussion_comment:
+    types:
+      - created
+      - edited
 
 permissions:
   pull-requests: write
@@ -20,4 +24,3 @@ jobs:
       - uses: sl1depengwyn/antiscam-action@main
         with:
           token: ${{ github.token }}
-

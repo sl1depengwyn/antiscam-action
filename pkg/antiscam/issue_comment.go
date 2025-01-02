@@ -29,7 +29,7 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 			event.GetRepo().GetName(),
 			event.GetComment().GetID(),
 		)
-	
+
 		if _, _, err := a.client.Issues.CreateComment(
 			a.ctx,
 			event.GetRepo().GetOwner().GetLogin(),
