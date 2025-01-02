@@ -13,6 +13,9 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 		return err
 	}
 
+	fmt.Printf("issue comment: %s\n", github.Stringify(event))
+
+
 	var detections []Detection
 	detections = append(detections, checkComment(event.GetComment().GetBody())...)
 
