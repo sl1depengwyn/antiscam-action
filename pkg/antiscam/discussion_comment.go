@@ -13,6 +13,8 @@ func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 		return err
 	}
 
+	fmt.Printf("raw event payload: %s\n", payload)
+
 	// discussion_comment.get
 
 	var detections []Detection
