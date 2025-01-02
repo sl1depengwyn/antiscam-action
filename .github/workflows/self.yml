@@ -24,3 +24,6 @@ jobs:
       - uses: sl1depengwyn/antiscam-action@main
         with:
           token: ${{ github.token }}
+      - name: Debug event
+        run: |
+          echo '${{ toJSON(github.event) }}'
