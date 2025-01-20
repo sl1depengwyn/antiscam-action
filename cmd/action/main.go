@@ -4,7 +4,8 @@ import (
 	"context"
 	"fmt"
 	"os"
-
+	"golang.org/x/oauth2"
+	"github.com/shurcooL/githubv4"
 	"github.com/google/go-github/v50/github"
 	"github.com/vbaranov/antiscam-action/pkg/antiscam"
 )
@@ -23,8 +24,16 @@ func main() {
 	}
 
 	ctx := context.Background()
-	client := github.NewTokenClient(ctx, os.Getenv("INPUT_TOKEN"))
-	a := antiscam.New(ctx, client)
+	rest_client := github.NewTokenClient(ctx, os.Getenv("INPUT_TOKEN"))
+
+	src := oauth2.StaticTokenSource(
+		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
+	)
+	httpClient := oauth2.NewClient(context.Background(), src)
+
+	graphql_client := githubv4.NewClient(httpClient)
+
+	a := antiscam.New(ctx, rest_client, graphql_client)
 
 	switch eventType {
 	case "issue_comment":

@@ -3,36 +3,32 @@ package antiscam
 import (
 	"encoding/json"
 	"fmt"
-
+	// "github.com/shurcooL/githubv4"
 	"github.com/google/go-github/v50/github"
 )
 
 func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
-	var discussion_event github.DiscussionEvent
-	var team_event github.TeamEvent
-	var issue_comment github.IssueCommentEvent
+	var dis_comment github.DiscussionComment
 
 	// github.Event
 
 	fmt.Printf("raw event payload: %s\n", payload)
 
-	if err := json.Unmarshal(payload, &discussion_event); err != nil {
+	if err := json.Unmarshal(payload, &dis_comment); err != nil {
 		return err
 	}
 
-	fmt.Printf("discussion event: %s\n", github.Stringify(discussion_event))
+	fmt.Printf("discussion comment: %s\n", github.Stringify(dis_comment))
 
-	if err := json.Unmarshal(payload, &team_event); err != nil {
-		return err
-	}
+	// var mutation struct {
+    //     DeleteDiscussionComment struct {
+    //         ClientMutationID *string
+    //     } `graphql:"deleteDiscussionComment(input: $input)"`
+    // }
 
-	fmt.Printf("team event: %s\n", github.Stringify(team_event))
-
-	if err := json.Unmarshal(payload, &issue_comment); err != nil {
-		return err
-	}
-
-	fmt.Printf("issue comment: %s\n", github.Stringify(issue_comment))
+	// input := DeleteDiscussionCommentInput{
+    //     ID: githubv4.ID(commentID),
+    // }
 
 	// discussion_comment.get
 

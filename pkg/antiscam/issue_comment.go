@@ -26,14 +26,14 @@ func (a *Antiscam) ProcessIssueComment(payload []byte) error {
 	}
 
 	if len(detections) > 0 {
-		a.client.Issues.DeleteComment(
+		a.rest_client.Issues.DeleteComment(
 			a.ctx,
 			event.GetRepo().GetOwner().GetLogin(),
 			event.GetRepo().GetName(),
 			event.GetComment().GetID(),
 		)
 
-		if _, _, err := a.client.Issues.CreateComment(
+		if _, _, err := a.rest_client.Issues.CreateComment(
 			a.ctx,
 			event.GetRepo().GetOwner().GetLogin(),
 			event.GetRepo().GetName(),
