@@ -27,7 +27,7 @@ func main() {
 	rest_client := github.NewTokenClient(ctx, os.Getenv("INPUT_TOKEN"))
 
 	src := oauth2.StaticTokenSource(
-		&oauth2.Token{AccessToken: os.Getenv("GITHUB_TOKEN")},
+		&oauth2.Token{AccessToken: os.Getenv("INPUT_TOKEN")},
 	)
 	httpClient := oauth2.NewClient(ctx, src)
 
