@@ -3,33 +3,34 @@ package antiscam
 import (
 	"encoding/json"
 	"fmt"
-	// "github.com/shurcooL/githubv4"
 	"github.com/google/go-github/v50/github"
+	"github.com/shurcooL/githubv4"
 )
 
 func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
-	var dis_comment github.DiscussionComment
+	var event github.IssueCommentEvent
 
-	// github.Event
-
-	fmt.Printf("raw event payload: %s\n", payload)
-
-	if err := json.Unmarshal(payload, &dis_comment); err != nil {
+	if err := json.Unmarshal(payload, &event); err != nil {
 		return err
 	}
 
-	fmt.Printf("discussion comment: %s\n", github.Stringify(dis_comment))
+	var mutation struct {
+		DeleteDiscussionComment struct {
+			ClientMutationID *string
+		} `graphql:"deleteDiscussionComment(input: $input)"`
+	}
 
-	// var mutation struct {
-    //     DeleteDiscussionComment struct {
-    //         ClientMutationID *string
-    //     } `graphql:"deleteDiscussionComment(input: $input)"`
-    // }
+	input := githubv4.DeleteDiscussionCommentInput{
+		ID: githubv4.ID(event.GetComment().GetID()),
+	}
 
-	// input := DeleteDiscussionCommentInput{
-    //     ID: githubv4.ID(commentID),
-    // }
+	err := a.graphql_client.Mutate(a.ctx, &mutation, input, nil)
 
+	if err != nil {
+		fmt.Println("Error deleting discussion comment: %v", err)
+	}
+
+	fmt.Println("Discussion comment deleted successfully!")
 	// discussion_comment.get
 
 	// var detections []Detection
