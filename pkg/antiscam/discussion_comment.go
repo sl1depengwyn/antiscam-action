@@ -3,7 +3,7 @@ package antiscam
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-github/v50/github"
+	// "github.com/google/go-github/v50/github"
 	"github.com/shurcooL/githubv4"
 )
 
