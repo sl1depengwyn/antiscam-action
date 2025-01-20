@@ -8,7 +8,7 @@ import (
 )
 
 func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
-	var event github.IssueCommentEvent
+	var event map[string]map[string]string
 
 	if err := json.Unmarshal(payload, &event); err != nil {
 		return err
@@ -21,7 +21,7 @@ func (a *Antiscam) ProcessDiscussionComment(payload []byte) error {
 	}
 
 	input := githubv4.DeleteDiscussionCommentInput{
-		ID: githubv4.ID(event.GetComment().GetID()),
+		ID: githubv4.ID(event["comment"]["node_id"]),
 	}
 
 	err := a.graphql_client.Mutate(a.ctx, &mutation, input, nil)
